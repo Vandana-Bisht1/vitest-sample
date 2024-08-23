@@ -21,8 +21,8 @@ describe("UserList", () => {
       http.get("https://dummyjson.com/users", () => {
         return HttpResponse.json({
           users: [
-            { id: 1, name: "John Doe", email: "john@example.com" },
-            { id: 2, name: "Jane Smith", email: "jane@example.com" },
+            { id: 1, firstName: "John", lastName:"Doe", email: "john@example.com" },
+            { id: 2, firstName: "Jane", lastName:"Smith", email: "jane@example.com" },
           ],
         });
       })
@@ -31,12 +31,8 @@ describe("UserList", () => {
 
     // Wait for and verify that users are displayed
     await waitFor(() => {
-      expect(
-        screen.getByText("John Doe")
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText("Jane Smith")
-      ).toBeInTheDocument();
+      expect(screen.getByText("John Doe")).toBeInTheDocument();
+      expect(screen.getByText("Jane Smith")).toBeInTheDocument();
     });
   });
 

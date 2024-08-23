@@ -3,7 +3,8 @@ import "./UserList.css";
 
 interface User {
   id: number;
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
 }
 
@@ -35,11 +36,11 @@ const UserList: React.FC = () => {
         <li key={user.id} className="user-list-item">
           <img
             src={`https://robohash.org/${user.id}?set=set5`}
-            alt={user.name}
+            alt={user.firstName}
             className="user-image"
           />
           <div className="user-info">
-            <div className="user-name">{user.name}</div>
+            <div className="user-name">{user.firstName + " " + user.lastName}</div>
             <div className="user-email">{user.email}</div>
           </div>
         </li>
