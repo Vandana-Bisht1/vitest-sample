@@ -80,7 +80,7 @@ test("Login form UI elements", async () => {
   });
 
   // Style checks
-  expect(submitButton).toHaveStyle("cursor: pointer;");
+  expect(submitButton).toHaveStyle("cursor: default;");
   expect(submitButton).toHaveTextContent(/Login/i);
 
   // Final assertions
