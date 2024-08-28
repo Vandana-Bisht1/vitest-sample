@@ -92,7 +92,7 @@ const Login: React.FC = () => {
         </button>
       </form>
       {submitted && (
-        <p className="success-message">Form submitted successfully!</p>
+        <p className="success-message">Login Successful!</p>
       )}
     </div>
   );

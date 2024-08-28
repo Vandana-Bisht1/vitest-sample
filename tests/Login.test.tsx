@@ -1,3 +1,4 @@
+import "@testing-library/jest-dom";
 import { render, screen, fireEvent, waitFor, cleanup } from "@testing-library/react";
 import { expect, test } from "vitest";
 import { userEvent } from '@testing-library/user-event';
@@ -33,7 +34,7 @@ test("Login form UI elements", async () => {
 
   expect(submitButton).toBeEnabled();
 
-  const successMessage = screen.queryByText(/Form submitted successfully!/i);
+  const successMessage = screen.queryByText(/Login Successful!/i);
   expect(successMessage).toBeNull();
 
   expect(form).toBeInTheDocument();
@@ -90,7 +91,7 @@ test("Login form UI elements", async () => {
 
   // Simulate form submission
   fireEvent.click(submitButton);
-  expect(screen.getByText(/Form submitted successfully!/i)).toBeInTheDocument();
+  expect(screen.getByText(/Login Successful!/i)).toBeInTheDocument();
 });
 
 // Helper function to perform login and check success message
@@ -112,22 +113,61 @@ const performLogin = async (email: string, password: string) => {
   fireEvent.click(submitButton);
 
   // Wait for the success message to appear
-  return waitFor(() => screen.queryByText(/Form submitted successfully!/i));
+  return waitFor(() => screen.queryByText(/Login Successful!/i));
 };
 
-test('Login form UI elements with retry logic', async () => {
+test(
+  'Login form UI elements with retry logic',
+  async () => {
+    const maxRetries = 3;
+    let successMessage: HTMLElement | null = null;
+
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      const password = attempt === maxRetries ? 'password' : 'abc';    
+      console.log(`Attempt ${attempt}: email=test@example.com, password=${password}`);
+      successMessage = await performLogin('test@example.com', password);
+
+      if (successMessage) {
+        break;
+      }
+
+      if (attempt < maxRetries) {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+      }
+    }
+
+    await waitFor(
+      () => {
+        expect(successMessage).toBeInTheDocument();
+      },
+      { timeout: 5000 }
+    );
+  },
+  { retry: 3 } // Retry option added here
+);
+
+test("Login form UI elements with expect.poll logic", async () => {
   const maxRetries = 3;
   let successMessage: HTMLElement | null = null;
 
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
-    const password = attempt === 3 ? 'password' : 'abc';    
+    const password = attempt === maxRetries ? 'password' : 'abc';
     console.log(`Attempt ${attempt}: email=test@example.com, password=${password}`);
     successMessage = await performLogin('test@example.com', password);
 
-    if (attempt === maxRetries) {
-      expect(successMessage).toBeInTheDocument();
-    } 
-    if (successMessage || attempt === maxRetries) break;
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    if (successMessage) {
+      break;
+    }
+
+    if (attempt < maxRetries) {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    }
   }
+
+  await expect
+    .poll(() => successMessage?.textContent, {
+      timeout: 5000, // 5 seconds timeout
+      interval: 100, // Poll every 100ms
+    })
+    .toBe("Login Successful!");
 });
