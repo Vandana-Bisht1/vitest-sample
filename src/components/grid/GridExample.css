@@ -1,0 +1,26 @@
+.green-cell {
+    background-color: green;
+}
+
+.blue-row {
+    background-color: blue;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .button-group button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+  }

@@ -3,6 +3,8 @@ import "./App.css";
 import Home from "./components/Home";
 import UserList from "./components/UserList";
 import Login from "./components/login/Login";
+import GridExample from "./components/grid/GridExample";
+import NewGrid from "./components/new-grid/NewGrid";
 
 function App() {
   const [activeTab, setActiveTab] = useState("tab1");
@@ -15,6 +17,10 @@ function App() {
         return <UserList />;
       case "tab3":
         return <Login />;
+      case "tab4":
+        return <GridExample />;
+      case "tab5":
+        return <NewGrid />;
       default:
         return <Home />;
     }
@@ -39,6 +45,18 @@ function App() {
           onClick={() => setActiveTab("tab3")}
         >
           Tab 3
+        </div>
+        <div
+          className={`tab ${activeTab === "tab4" ? "active" : ""}`}
+          onClick={() => setActiveTab("tab4")}
+        >
+          Tab 4
+        </div>
+        <div
+          className={`tab ${activeTab === "tab5" ? "active" : ""}`}
+          onClick={() => setActiveTab("tab5")}
+        >
+          Tab 5
         </div>
       </div>
       <div className="tab-content">{renderTabContent()}</div>
