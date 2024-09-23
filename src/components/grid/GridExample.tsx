@@ -3,6 +3,7 @@ import { AgGridReact } from "ag-grid-react";
 import "./GridExample.css";
 import { GridData } from "./GridData";
 import { FilterModel } from "ag-grid-community";
+import ElectricFilter from "./ElectricFilter";
 
 const GridExample = () => {
   const gridRef = useRef<AgGridReact>(null);
@@ -135,6 +136,11 @@ const GridExample = () => {
     },
     {
       field: "electric",
+      filter: ElectricFilter,
+      // floatingFilterComponent: FloatingElectricFilter,
+      // floatingFilterComponentParams: {
+      //   suppressFloatingFilterButton: true, // Optional: hide default filter button
+      // },
     },
     {
       headerName: "Performance",

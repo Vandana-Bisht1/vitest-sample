@@ -5,6 +5,9 @@ import UserList from "./components/UserList";
 import Login from "./components/login/Login";
 import GridExample from "./components/grid/GridExample";
 import NewGrid from "./components/new-grid/NewGrid";
+import SparkLine from "./components/spark-line/SparkLine";
+import ChartSample from "./components/chart/ChartSample";
+import ImportExport from "./components/import-export/ImportExport";
 
 function App() {
   const [activeTab, setActiveTab] = useState("tab1");
@@ -21,43 +24,30 @@ function App() {
         return <GridExample />;
       case "tab5":
         return <NewGrid />;
+      case "tab6":
+        return <SparkLine />;
+      case "tab7":
+        return <ChartSample />;
+      case "tab8":
+        return <ImportExport />;
       default:
         return <Home />;
     }
   };
+  const tabs = ["tab1", "tab2", "tab3", "tab4", "tab5", "tab6", "tab7", "tab8"];
+
   return (
     <div className="app">
       <div className="tabs">
-        <div
-          className={`tab ${activeTab === "tab1" ? "active" : ""}`}
-          onClick={() => setActiveTab("tab1")}
-        >
-          Tab 1
-        </div>
-        <div
-          className={`tab ${activeTab === "tab2" ? "active" : ""}`}
-          onClick={() => setActiveTab("tab2")}
-        >
-          Tab 2
-        </div>
-        <div
-          className={`tab ${activeTab === "tab3" ? "active" : ""}`}
-          onClick={() => setActiveTab("tab3")}
-        >
-          Tab 3
-        </div>
-        <div
-          className={`tab ${activeTab === "tab4" ? "active" : ""}`}
-          onClick={() => setActiveTab("tab4")}
-        >
-          Tab 4
-        </div>
-        <div
-          className={`tab ${activeTab === "tab5" ? "active" : ""}`}
-          onClick={() => setActiveTab("tab5")}
-        >
-          Tab 5
-        </div>
+        {tabs.map((tab) => (
+          <div
+            key={tab}
+            className={`tab ${activeTab === tab ? "active" : ""}`}
+            onClick={() => setActiveTab(tab)}
+          >
+            {tab.charAt(0).toUpperCase() + tab.slice(1).replace("tab", "Tab ")}
+          </div>
+        ))}
       </div>
       <div className="tab-content">{renderTabContent()}</div>
     </div>

@@ -13,11 +13,13 @@
     "coverage": "vitest run --coverage && open coverage/index.html && vite preview --outDir coverage "
   },
   "dependencies": {
+    "ag-grid-charts-enterprise": "^32.2.0",
     "ag-grid-community": "^32.1.0",
     "ag-grid-enterprise": "^32.1.0",
     "ag-grid-react": "^32.1.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
